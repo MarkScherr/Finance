@@ -1,8 +1,55 @@
 package home.finance.util;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class SpeakerUtil {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+    public static LocalDate handleInputMonths(Scanner scanner) {
+        String message = "Please enter how many months of income you would like to view: ";
+        int result = -10;
+        while (result == -10) {
+            System.out.print(message);
+            try {
+                result = scanner.nextInt();
+                if (result < 0) {
+                    System.out.println("gotta have a number greater than zero");
+                }
+            } catch (Exception ex) {
+                System.out.println("!!!!!!Unable to understand request please attempt again!!!!!!\n");
+            }
+        }
+        LocalDate now = LocalDate.now();
+        LocalDate monthsAgoTime = now.minusMonths(result);
+        return monthsAgoTime.withDayOfMonth(1);
+    }
+
+    public static LocalDate handleInputDate(Scanner scanner, String message) {
+        boolean isCorrectDateFormat = false;
+        LocalDate result = LocalDate.now();
+        while (!isCorrectDateFormat) {
+            System.out.print(message);
+            try {
+                String input = "";
+                while (input.isBlank()) {
+                    input = scanner.nextLine();
+                }
+                if (input.equalsIgnoreCase("t")) {
+                    isCorrectDateFormat = true;
+                    result = LocalDate.now();
+                } else {
+                    result = LocalDate.parse(input, FORMATTER);
+                    isCorrectDateFormat = true;
+                }
+            } catch (Exception ex) {
+                System.out.println("!!!!!!Unable to understand request please attempt again!!!!!!\n");
+            }
+        }
+        return result;
+    }
 
     public static int handleInputInteger(Scanner scanner, String message, boolean isNullable) {
         int result = -10;
@@ -10,11 +57,11 @@ public class SpeakerUtil {
             System.out.print(message);
             try {
                 result = scanner.nextInt();
-                if (result < 1) {
+                if (result < 0) {
                     if (result == -1 && isNullable) {
                         System.out.println("Setting value to Not Applicable");
                     } else {
-                        System.out.println("gotta have a number greater than zero other than specifically -1 if stated before");
+                        System.out.println("gotta have a positive integer  other than specifically -1 if stated before");
                     }
                 }
             } catch (Exception ex) {
@@ -50,7 +97,6 @@ public class SpeakerUtil {
                     isCorrectData = true;
                 } else if (value.equalsIgnoreCase("n") ||
                         value.equalsIgnoreCase("no")) {
-                    result = false;
                     isCorrectData = true;
                 } else {
                     throw new Exception();

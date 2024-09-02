@@ -4,13 +4,12 @@ import home.finance.entity.dao.Bill;
 import home.finance.repository.BillRepository;
 import home.finance.util.SpeakerUtil;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Scanner;
 
 public class BillService {
 
-    private BillRepository billRepository;
+    private final BillRepository billRepository;
 
     public BillService(BillRepository billRepository) {
         this.billRepository = billRepository;
@@ -36,7 +35,7 @@ public class BillService {
 
     }
 
-    public void updateBill(boolean stayInLevel) {
+    public void updateBill() {
         Scanner scanner = new Scanner(System.in);
         List<Bill> bills = billRepository.findAll();
         int selection = getBillSelection(bills, scanner);
@@ -79,7 +78,7 @@ public class BillService {
                 setAutoPayFromInput(scanner, billToUpdate);
                 break;
             case 8:
-                System.out.println("Exiting the application. Goodbye!");
+                System.out.println("\nSmell ya later!");
                 scanner.close();
                 System.exit(0);
                 break;

@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class BillApplication {
 
-    private BillRepository billRepository;
+    private final BillRepository billRepository;
 
     public BillApplication(BillRepository billRepository) {
         this.billRepository = billRepository;
@@ -48,7 +48,7 @@ public class BillApplication {
                     billService.addBill();
                     break;
                 case "3":
-                    billService.updateBill(stayInLevel);
+                    billService.updateBill();
                     break;
                 case "4":
                     billService.removeBill(scanner);
@@ -61,7 +61,7 @@ public class BillApplication {
                     stayInLevel = false;
                     break;
                 case "9":
-                    System.out.println("Exiting the application. Goodbye!");
+                    System.out.println("\nSmell ya later!");
                     scanner.close();
                     System.exit(0);
                     break;
