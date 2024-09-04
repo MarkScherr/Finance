@@ -21,22 +21,22 @@ public class BillRepository {
     public void addBill(Bill bill) {
         String sql = "INSERT INTO \"Finance\".\"Bill\" (" +
                 "bill_name, bill_type, min_payment_amount, payment_date, max_payment_amount, " +
-                "total_due, is_auto_pay) VALUES(?, ?, ?, ?, ?, ?, ?);";
+                "total_due, is_auto_pay, is_paid) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
         jdbcTemplate.update(sql,
                 bill.getBillName(), bill.getBillType(), bill.getMinimumPaymentAmount(),
                 bill.getPaymentDate(), bill.getMaximumPaymentAmount(), bill.getTotalDue(),
-                bill.isAutoPay()
+                bill.isPaid(), bill.isAutoPay()
         );
     }
 
     public int updateBill(Bill bill) {
         String sql = "UPDATE \"Finance\".\"Bill\" SET bill_name = ?, bill_type = ?, " +
-                "min_payment_amount = ?, max_payment_amount = ?, " +
-                "total_due = ?, is_auto_pay = ? WHERE id = ?;";
+                "min_payment_amount = ?, max_payment_amount = ?, payment_date = ?," +
+                "total_due = ?, is_auto_pay = ?, is_paid = ? WHERE id = ?;";
         return jdbcTemplate.update(sql,
                 bill.getBillName(), bill.getBillType(), bill.getMinimumPaymentAmount(),
-                bill.getPaymentDate(), bill.getMaximumPaymentAmount(), bill.getTotalDue(),
-                bill.isAutoPay()
+                bill.getMaximumPaymentAmount(), bill.getPaymentDate(), bill.getTotalDue(),
+                bill.isAutoPay(), bill.isPaid(), bill.getId()
         );
     }
 

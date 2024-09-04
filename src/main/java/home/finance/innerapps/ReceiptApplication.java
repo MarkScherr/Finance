@@ -1,19 +1,19 @@
 package home.finance.innerapps;
 
-import home.finance.entity.dao.Income;
-import home.finance.repository.IncomeRepository;
-import home.finance.service.IncomeService;
+import home.finance.entity.dao.Receipt;
+import home.finance.repository.ReceiptRepository;
+import home.finance.service.ReceiptService;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class IncomeApplication {
+public class ReceiptApplication {
 
 
-    private final IncomeService incomeService;
+    private final ReceiptService receiptService;
 
-    public IncomeApplication(IncomeService incomeService) {
-        this.incomeService = incomeService;
+    public ReceiptApplication(ReceiptService receiptService) {
+        this.receiptService = receiptService;
     }
 
     public void run() {
@@ -21,13 +21,13 @@ public class IncomeApplication {
         boolean stayInLevel = true;
         while (stayInLevel) {
             String  userInput = "";
-            System.out.println("!!!!!!!!!!!!INCOME!!!!INCOME!!!!INCOME!!!!!!!!!!!!\n--------------------------");
+            System.out.println("!!!!!!!!!!!!RECEIPTS!!!!RECEIPTS!!!!RECEIPTS!!!!!!!!!!!!\n--------------------------");
             System.out.println("Please choose an option:");
-            System.out.println("1. list incomes");
-            System.out.println("2. add income");
-            System.out.println("3. update income");
-            System.out.println("4. remove income");
-            System.out.println("5. display income");
+            System.out.println("1. list receipts");
+            System.out.println("2. add receipt");
+            System.out.println("3. update receipt");
+            System.out.println("4. remove receipt");
+            System.out.println("5. display receipt");
             System.out.println("8. up");
             System.out.println("9. Exit");
             System.out.print("Enter your choice: ");
@@ -38,28 +38,28 @@ public class IncomeApplication {
             // Process the input
             switch (userInput) {
                 case "1":
-                    List<Income> incomes = incomeService.findAllIncomeInDateRange(scanner);
-                    if (incomes.isEmpty()) {
-                        System.out.println("unable to find any income data");
+                    List<Receipt> receipts = receiptService.findAllReceiptInDateRange(scanner);
+                    if (receipts.isEmpty()) {
+                        System.out.println("unable to find any receipt data");
                     }
-                    for (Income income : incomes) {
-                        System.out.println(income.getDate() + " : " + income.getName() + " : " + income.getAmount());
+                    for (Receipt receipt : receipts) {
+                        System.out.println(receipt.getName());
                     }
                     break;
                 case "2":
-                    incomeService.addIncome(scanner);
+                    receiptService.addReceipt(scanner);
                     break;
                 case "3":
-                    incomeService.updateIncome(scanner);
+                    receiptService.updateReceipt(scanner);
                     break;
                 case "4":
-                    incomeService.removeIncome(scanner);
+                    receiptService.removeReceipt(scanner);
                     break;
                 case "5":
-                    incomeService.displayIncome(scanner);
+                    receiptService.displayReceipt(scanner);
                     break;
                 case "8":
-                    System.out.println("peace out incoming incomes!");
+                    System.out.println("peace out incoming receipts!");
                     stayInLevel = false;
                     break;
                 case "9":

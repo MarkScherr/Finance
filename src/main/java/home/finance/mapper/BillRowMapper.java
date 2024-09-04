@@ -19,6 +19,7 @@ public class BillRowMapper implements RowMapper<Bill> {
         bill.setPaymentDate(rs.getInt("payment_date"));
         bill.setTotalDue(rs.getInt("total_due"));
         bill.setAutoPay(rs.getBoolean("is_auto_pay"));
+        bill.setPaid(rs.getBoolean("is_paid"));
         return bill;
     }
 }

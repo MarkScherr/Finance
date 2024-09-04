@@ -17,7 +17,7 @@ public class IncomeRowMapper implements RowMapper<Income> {
         income.setAmount(rs.getInt("amount"));
         income.setDate(rs.getDate("date").toLocalDate());
         income.setRecurring(rs.getBoolean("is_recurring"));
-        income.setId(rs.getInt("id"));
+        income.setPaymentFrequency(rs.getString("payment_frequency"));
         return income;
     }
 }

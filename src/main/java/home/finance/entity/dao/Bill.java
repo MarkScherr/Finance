@@ -12,4 +12,5 @@ public class Bill {
     private int paymentDate;
     private int totalDue;
     private boolean isAutoPay;
+    private boolean isPaid;
 }

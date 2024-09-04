@@ -9,15 +9,14 @@ import java.util.Scanner;
 
 public class BillApplication {
 
-    private final BillRepository billRepository;
+    private final BillService billService;
 
-    public BillApplication(BillRepository billRepository) {
-        this.billRepository = billRepository;
+    public BillApplication(BillService billService) {
+        this.billService = billService;
     }
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        BillService billService = new BillService(billRepository);
         boolean stayInLevel = true;
         while (stayInLevel) {
             String  userInput = "";
@@ -41,7 +40,8 @@ public class BillApplication {
                 case "1":
                     List<Bill> bills = billService.findAllBills();
                     for (Bill bill : bills) {
-                        System.out.println(bill.getBillName());
+                        System.out.println(bill.getPaymentDate() + " : " + bill.getBillName() + " : " +
+                                bill.getMinimumPaymentAmount());
                     }
                     break;
                 case "2":

@@ -5,14 +5,13 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class Income {
+public class Receipt {
     private int id;
     private String name;
     private String type;
     private int amount;
     private LocalDate date = setDate();
     private boolean isRecurring;
-    private String paymentFrequency;
 
     public LocalDate setDate() {
         return LocalDate.now();

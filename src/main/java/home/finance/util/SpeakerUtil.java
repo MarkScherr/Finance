@@ -9,7 +9,7 @@ public class SpeakerUtil {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
     public static LocalDate handleInputMonths(Scanner scanner) {
-        String message = "Please enter how many months of income you would like to view: ";
+        String message = "Please enter how many months you would like to view: ";
         int result = -10;
         while (result == -10) {
             System.out.print(message);
@@ -90,7 +90,10 @@ public class SpeakerUtil {
         while (!isCorrectData) {
             System.out.print(message);
             try {
-                String value = scanner.nextLine();
+                String value = "";
+                while(value.isBlank()) {
+                    value = scanner.nextLine();
+                }
                 if (value.equalsIgnoreCase("y") ||
                         value.equalsIgnoreCase("yes")) {
                     result = true;

@@ -5,6 +5,7 @@ import home.finance.repository.IncomeRepository;
 import home.finance.util.SpeakerUtil;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,8 +31,31 @@ public class IncomeService {
         setAmountFromInput(scanner, income);
         setDateFromInput(scanner, income);
         setRecurringFromInput(scanner, income);
-        incomeRepository.addIncome(income);
+        setPayFrequencyFromInput(scanner, income);
+        addOneYearOfIncome(income);
+    }
 
+    private void addOneYearOfIncome(Income income) {
+        String paymentFrequency = income.getPaymentFrequency();
+        if(paymentFrequency.equalsIgnoreCase("BW")) {
+            LocalDate date = income.getDate();
+            incomeRepository.addIncome(income);
+            for (int i = 0; i < 26; i++) {
+                date = date.plusWeeks(2);
+                income.setDate(date);
+                incomeRepository.addIncome(income);
+            }
+        } else if (paymentFrequency.equalsIgnoreCase("BM")) {
+           //TODO
+        } else if (paymentFrequency.equalsIgnoreCase("W")) {
+            LocalDate date = income.getDate();
+            incomeRepository.addIncome(income);
+            for (int i = 0; i < 52; i++) {
+                date = date.plusWeeks(1);
+                income.setDate(date);
+                incomeRepository.addIncome(income);
+            }
+        }
     }
 
     public void updateIncome(Scanner scanner) {
@@ -46,6 +70,7 @@ public class IncomeService {
                 "3. amount\n" +
                 "4. date\n" +
                 "5. is recurring\n" +
+                "6. pay frequency\n" +
                 "10. exit\n"
         );
         selection = SpeakerUtil.handleInputInteger(scanner,
@@ -68,6 +93,9 @@ public class IncomeService {
             case 5:
                 setRecurringFromInput(scanner, incomeToUpdate);
                 break;
+            case 6:
+                setPayFrequencyFromInput(scanner, incomeToUpdate);
+                break;
             case 10:
                 System.out.println("\nSmell ya later!");
                 scanner.close();
@@ -82,7 +110,8 @@ public class IncomeService {
     private int getIncomeSelection(List<Income> incomes, Scanner scanner) {
         System.out.println();
         for (int i = 0; i < incomes.size(); i++) {
-            System.out.println(i + ". " + incomes.get(i).getName());
+            System.out.println(i + ". " + incomes.get(i).getDate() + ":" +
+                    incomes.get(i).getName() + ":" + incomes.get(i).getAmount());
         }
 
         return SpeakerUtil.handleInputInteger(scanner,
@@ -152,5 +181,13 @@ public class IncomeService {
                         "Is income INCOME RECURRING (y/n): "
                 )
         );
+    }
+
+    private void setPayFrequencyFromInput(Scanner scanner, Income income) {
+        income.setPaymentFrequency(
+                SpeakerUtil.handleInputString(scanner,
+                        "Please enter PAYMENT FREQUENCY (BW, BM, W): ")
+        );
+
     }
 }

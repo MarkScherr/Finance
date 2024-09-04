@@ -30,6 +30,7 @@ public class BillService {
         setDueDateFromInput(scanner, bill);
         setTotalDueFromInput(scanner, bill);
         setAutoPayFromInput(scanner, bill);
+        setPaidFromInput(scanner, bill);
 
         billRepository.addBill(bill);
 
@@ -47,9 +48,10 @@ public class BillService {
                 "3. minimum payment\n" +
                 "4. maximum payment\n" +
                 "5. date due\n" +
-                "6. date due\n" +
+                "6. total due\n" +
                 "7. is auto pay\n" +
-                "8. exit application"
+                "8. is bill paid\n" +
+                "20. exit application"
         );
         selection = SpeakerUtil.handleInputInteger(scanner,
                 "Please enter selection: ",
@@ -78,6 +80,9 @@ public class BillService {
                 setAutoPayFromInput(scanner, billToUpdate);
                 break;
             case 8:
+                setPaidFromInput(scanner, billToUpdate);
+                break;
+            case 20:
                 System.out.println("\nSmell ya later!");
                 scanner.close();
                 System.exit(0);
@@ -89,11 +94,10 @@ public class BillService {
     }
 
     private int getBillSelection(List<Bill> bills, Scanner scanner) {
-        System.out.println();
         for (int i = 0; i < bills.size(); i++) {
-            System.out.println(i + ". " + bills.get(i).getBillName());
+            System.out.println(i + ". " + bills.get(i).getPaymentDate() + " : " +
+                    bills.get(i).getBillName() + " : " + bills.get(i).getMinimumPaymentAmount());
         }
-
         return SpeakerUtil.handleInputInteger(scanner,
                 "Please enter selection: ",
                 false);
@@ -175,6 +179,14 @@ public class BillService {
             SpeakerUtil.handleInputBooleanString(scanner,
                     "Is bill AUTO PAY (y/n): "
             )
+        );
+    }
+
+    private void setPaidFromInput(Scanner scanner, Bill bill) {
+        bill.setAutoPay(
+                SpeakerUtil.handleInputBooleanString(scanner,
+                        "Is bill completely PAID (y/n): "
+                )
         );
     }
 }

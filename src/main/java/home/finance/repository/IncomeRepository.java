@@ -22,17 +22,18 @@ public class IncomeRepository {
 
     public void addIncome(Income income) {
         String sql = "INSERT INTO \"Finance\".\"Income\" (" +
-                "name, type, amount, date, is_recurring)  VALUES(?, ?, ?, ?, ?);";
+                "name, type, amount, date, is_recurring, payment_frequency)  VALUES(?, ?, ?, ?, ?, ?);";
         jdbcTemplate.update(sql,
-                income.getName(), income.getType(), income.getAmount(), income.getDate(), income.isRecurring());
+                income.getName(), income.getType(), income.getAmount(),
+                income.getDate(), income.isRecurring(), income.getPaymentFrequency());
     }
 
     public void updateIncome(Income income) {
         String sql = "UPDATE \"Finance\".\"Income\" SET name = ?, type = ?, " +
-                "amount = ?, date = ?, is_recurring = ? WHERE id = ?;";
+                "amount = ?, date = ?, is_recurring = ?, payment_frequency = ? WHERE id = ?;";
         jdbcTemplate.update(sql,
                 income.getName(), income.getType(), income.getAmount(), income.getDate(),
-                income.isRecurring(), income.getId());
+                income.isRecurring(), income.getPaymentFrequency(), income.getId());
     }
 
     public void removeIncome(int id) {
