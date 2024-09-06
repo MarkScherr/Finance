@@ -21,7 +21,6 @@ public class Run {
 
     public static void startApplication() {
         Scanner scanner = new Scanner(System.in);
-        String userInput;
         JdbcTemplate jdbcTemplate = JdbcConfig.createJdbcTemplate();
         BillRepository billRepository = new BillRepository(jdbcTemplate);
         BillService billService = new BillService(billRepository);
@@ -38,7 +37,8 @@ public class Run {
         BillPayCalculatorApplication billPayCalculatorApplication = new BillPayCalculatorApplication(billPayCalculatorService);
 
         while (true) {
-//            receiptApplication.run();
+            billPayCalculatorService.determineMonthlyPayments(scanner);
+            String userInput = "";
             System.out.println("Please choose an option:");
             System.out.println("1. Bill");
             System.out.println("2. Income");
@@ -46,7 +46,9 @@ public class Run {
             System.out.println("4. Bill Pay Date Calculator");
             System.out.println("10. Exit");
             System.out.print("Enter your choice: ");
-            userInput = scanner.nextLine();
+            while (userInput.isBlank())  {
+                userInput = scanner.nextLine();
+            }
 
             // Process the input
             switch (userInput) {

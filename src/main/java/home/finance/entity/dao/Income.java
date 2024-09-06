@@ -13,6 +13,7 @@ public class Income {
     private LocalDate date = setDate();
     private boolean isRecurring;
     private String paymentFrequency;
+    private Boolean isAccountedFor;
 
     public LocalDate setDate() {
         return LocalDate.now();

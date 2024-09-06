@@ -16,7 +16,7 @@ public class CurrentTotalsRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<CurrentTotals> findAll(LocalDate sinceDate) {
+    public List<CurrentTotals> findAll() {
         String sql = "SELECT * FROM \"Finance\".\"CurrentTotals\"";
         return jdbcTemplate.query(sql, new CurrentTotalsRowMapper());
     }

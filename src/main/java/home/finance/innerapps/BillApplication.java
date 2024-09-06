@@ -1,7 +1,6 @@
 package home.finance.innerapps;
 
 import home.finance.entity.dao.Bill;
-import home.finance.repository.BillRepository;
 import home.finance.service.BillService;
 
 import java.util.List;
@@ -19,18 +18,19 @@ public class BillApplication {
         Scanner scanner = new Scanner(System.in);
         boolean stayInLevel = true;
         while (stayInLevel) {
-            String  userInput = "";
-            // Print menu options
             System.out.println("\nBILLS BILLS BILLS!!!!!!!!!!!!\n--------------------------");
             System.out.println("Please choose an option:");
             System.out.println("1. list bills");
-            System.out.println("2. add bill");
-            System.out.println("3. update bill");
-            System.out.println("4. remove bill");
-            System.out.println("5. display bill");
+            System.out.println("2. list unpaid bills");
+            System.out.println("3. add bill");
+            System.out.println("4. update bill");
+            System.out.println("5. remove bill");
+            System.out.println("6. display bill");
             System.out.println("8. up");
             System.out.println("9. Exit");
             System.out.print("Enter your choice: ");
+
+            String  userInput = "";
             while (userInput.isBlank())  {
                 userInput = scanner.nextLine();
             }
@@ -45,15 +45,18 @@ public class BillApplication {
                     }
                     break;
                 case "2":
-                    billService.addBill();
+                    billService.findAllUnpaidBills();
                     break;
                 case "3":
-                    billService.updateBill();
+                    billService.addBill();
                     break;
                 case "4":
-                    billService.removeBill(scanner);
+                    billService.updateBill();
                     break;
                 case "5":
+                    billService.removeBill(scanner);
+                    break;
+                case "6":
                     billService.displayBill(scanner);
                     break;
                 case "8":

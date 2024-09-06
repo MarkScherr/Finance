@@ -18,6 +18,11 @@ public class BillRepository {
         return jdbcTemplate.query(sql, new BillRowMapper());
     }
 
+    public List<Bill> findAllUnpaidBills() {
+        String sql = "SELECT * FROM \"Finance\".\"Bill\" WHERE is_paid = false";
+        return jdbcTemplate.query(sql, new BillRowMapper());
+    }
+
     public void addBill(Bill bill) {
         String sql = "INSERT INTO \"Finance\".\"Bill\" (" +
                 "bill_name, bill_type, min_payment_amount, payment_date, max_payment_amount, " +

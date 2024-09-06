@@ -20,6 +20,13 @@ public class IncomeRepository {
         return jdbcTemplate.query(sql, new IncomeRowMapper(), sinceDate);
     }
 
+    public List<Income> findAllNewIncome(int month, int year) {
+        String sql = "SELECT * FROM \"Finance\".\"Income\"" +
+                " WHERE EXTRACT(YEAR FROM date) = ?" +
+                " AND EXTRACT(MONTH FROM date) = ?";
+        return jdbcTemplate.query(sql, new IncomeRowMapper(), year, month);
+    }
+
     public void addIncome(Income income) {
         String sql = "INSERT INTO \"Finance\".\"Income\" (" +
                 "name, type, amount, date, is_recurring, payment_frequency)  VALUES(?, ?, ?, ?, ?, ?);";

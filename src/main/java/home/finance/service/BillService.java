@@ -19,6 +19,14 @@ public class BillService {
         return billRepository.findAll();
     }
 
+    public void findAllUnpaidBills() {
+        List<Bill> unpaidBills = billRepository.findAllUnpaidBills();
+        for (Bill bill : unpaidBills) {
+            System.out.println(bill.getPaymentDate() + " : " + bill.getBillName() + " : " +
+                    bill.getMinimumPaymentAmount());
+        }
+    }
+
     public void addBill() {
         Scanner scanner = new Scanner(System.in);
         Bill bill = new Bill();
@@ -183,7 +191,7 @@ public class BillService {
     }
 
     private void setPaidFromInput(Scanner scanner, Bill bill) {
-        bill.setAutoPay(
+        bill.setPaid(
                 SpeakerUtil.handleInputBooleanString(scanner,
                         "Is bill completely PAID (y/n): "
                 )

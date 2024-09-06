@@ -72,13 +72,14 @@ public class SpeakerUtil {
     }
 
     public static String handleInputString(Scanner scanner, String message) {
-        String result = null;
-        while (result == null) {
-            System.out.print(message);
+        String result = "";
+        System.out.print(message);
+        while (result.isBlank()) {
             try {
                 result = scanner.nextLine();
             } catch (Exception ex) {
                 System.out.println("!!!!!!What the fuck you say? Unable to understand request please attempt again!!!!!!\n");
+                System.out.print(message);
             }
         }
         return result;

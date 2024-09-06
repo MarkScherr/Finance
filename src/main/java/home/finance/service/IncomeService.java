@@ -32,6 +32,7 @@ public class IncomeService {
         setDateFromInput(scanner, income);
         setRecurringFromInput(scanner, income);
         setPayFrequencyFromInput(scanner, income);
+        setIsAccountedFor(scanner, income);
         addOneYearOfIncome(income);
     }
 
@@ -95,6 +96,9 @@ public class IncomeService {
                 break;
             case 6:
                 setPayFrequencyFromInput(scanner, incomeToUpdate);
+                break;
+            case 7:
+                setIsAccountedFor(scanner, incomeToUpdate);
                 break;
             case 10:
                 System.out.println("\nSmell ya later!");
@@ -189,5 +193,13 @@ public class IncomeService {
                         "Please enter PAYMENT FREQUENCY (BW, BM, W): ")
         );
 
+    }
+
+    private void setIsAccountedFor(Scanner scanner, Income income) {
+        income.setRecurring(
+                SpeakerUtil.handleInputBooleanString(scanner,
+                        "Is income ACCOUNTED FOR: "
+                )
+        );
     }
 }
